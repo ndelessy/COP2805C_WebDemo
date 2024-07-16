@@ -1,0 +1,51 @@
+apply plugin: 'java'
+apply plugin: 'jacoco'
+apply plugin: 'war'
+
+repositories {
+    mavenCentral()
+}
+
+java {
+    sourceCompatibility = JavaVersion.VERSION_17
+    targetCompatibility = JavaVersion.VERSION_17
+}
+
+tasks.withType(JavaCompile) {
+    options.release = 17
+}
+
+ext {
+    glassfishVersion = '7.0.3'
+    jakartaEEVersion = '10.0.0'
+    jsfVersion = '4.0.0'
+}
+
+
+dependencies {
+
+
+    testImplementation     'junit:junit:4.13'
+
+
+ // Jakarta EE API
+    providedCompile "jakarta.platform:jakarta.jakartaee-api:${jakartaEEVersion}"
+    
+    // Servlet API
+    providedCompile "jakarta.servlet:jakarta.servlet-api:6.0.0"
+    
+    // JSP API
+    providedCompile "jakarta.servlet.jsp:jakarta.servlet.jsp-api:3.1.0"
+    
+    // JSTL
+    implementation "jakarta.servlet.jsp.jstl:jakarta.servlet.jsp.jstl-api:3.0.0"
+    implementation "org.glassfish.web:jakarta.servlet.jsp.jstl:3.0.1"
+    
+    // JSF
+    implementation "jakarta.faces:jakarta.faces-api:${jsfVersion}"
+    implementation "org.glassfish:jakarta.faces:${jsfVersion}"
+    
+    // GlassFish Embedded (for testing)
+    testImplementation "org.glassfish.main.extras:glassfish-embedded-all:${glassfishVersion}"
+
+}
